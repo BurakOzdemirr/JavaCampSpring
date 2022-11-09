@@ -1,6 +1,0 @@
-package kodlama.io.kodlama.io.Devs.business.concretes;
-
-
-public class LanguageManager implements LanguageService{
-
-}

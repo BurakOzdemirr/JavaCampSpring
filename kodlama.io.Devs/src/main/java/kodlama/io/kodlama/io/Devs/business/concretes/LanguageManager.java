@@ -1,11 +1,15 @@
 package kodlama.io.kodlama.io.Devs.business.concretes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlama.io.kodlama.io.Devs.business.abstracts.LanguageService;
+import kodlama.io.kodlama.io.Devs.business.requests.CreateLanguageRequest;
+import kodlama.io.kodlama.io.Devs.business.requests.UpdateLanguageRequest;
+import kodlama.io.kodlama.io.Devs.business.responses.GetAllLanguagesResponse;
 import kodlama.io.kodlama.io.Devs.dataAccess.abstracts.LanguageRepository;
 import kodlama.io.kodlama.io.Devs.entities.concretes.Language;
 
@@ -21,11 +25,60 @@ public class LanguageManager implements LanguageService{
 	}
 
 	@Override
-	public List<Language> getAll() {
+	public List<GetAllLanguagesResponse> getAll() {
 		
-		return languageRepository.getAll();
+		List<Language> languages =languageRepository.findAll();
+		List<GetAllLanguagesResponse> languagesResponse = new ArrayList<GetAllLanguagesResponse>();
+		
+		for(Language language : languages) {
+			GetAllLanguagesResponse responseItem = new GetAllLanguagesResponse();
+			responseItem.setId(language.getId());
+			responseItem.setName(language.getName());
+			
+			languagesResponse.add(responseItem);
+		}
+		
+		
+		
+		return languagesResponse;
 	}
 
+	@Override
+	public void add(Language language) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(int id) {
+		this.languageRepository.deleteById(id);
+		
+	}
+
+	
+
+	@Override
+	public void add1(CreateLanguageRequest createLanguageRequest) {
+		Language language= new Language();
+		language.setName(createLanguageRequest.getName());
+		
+		this.languageRepository.save(language);
+		
+	}
+
+	@Override
+	public void update(UpdateLanguageRequest updateLanguageRequest) {
+		Language language = new Language();
+        language.setId(updateLanguageRequest.getId());
+        language.setName(updateLanguageRequest.getName());
+
+        this.languageRepository.save(language);
+		
+	}
+
+	
+	/*
+	
 	@Override
 	public void add(Language language) throws Exception {
 		for (Language lng : languageRepository.getAll()) {
@@ -67,5 +120,5 @@ public class LanguageManager implements LanguageService{
 		languageRepository.update(language);
 		
 	}
-
+*/
 }

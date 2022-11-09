@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kodlama.io.kodlama.io.Devs.business.abstracts.LanguageService;
+import kodlama.io.kodlama.io.Devs.business.requests.CreateLanguageRequest;
+import kodlama.io.kodlama.io.Devs.business.requests.UpdateLanguageRequest;
+import kodlama.io.kodlama.io.Devs.business.responses.GetAllLanguagesResponse;
 import kodlama.io.kodlama.io.Devs.entities.concretes.Language;
 
 @RestController
@@ -27,7 +30,7 @@ public class LanguagesController {
 	}
 
 	@GetMapping("/getall")
-	public List<Language> getAll() {
+	public List<GetAllLanguagesResponse> getAll() {
 		return languageService.getAll();
 	}
 	
@@ -40,8 +43,18 @@ public class LanguagesController {
         languageService.delete(id);
     }
     @PutMapping("/update")
-    public void update(Language language){
-        languageService.update(language);
+    public void update(UpdateLanguageRequest updateLanguageRequest){
+        languageService.update(updateLanguageRequest);
     }
+    
+    @PostMapping("/add1")
+    public void add1(CreateLanguageRequest createLanguageRequest) {
+    	this.languageService.add1(createLanguageRequest);
+    	
+    }
+    
+    
 	
 }
+
+
